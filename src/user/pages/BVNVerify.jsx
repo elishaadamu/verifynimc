@@ -378,7 +378,7 @@ function BVNVerify() {
           </span>
           <span className="text-sm text-gray-400">
             By checking this box, you agreed that the owner of the ID has
-            granted you consent to verify his/her identity .
+            granted you consent to verify his/her identity.
           </span>
         </label>
 

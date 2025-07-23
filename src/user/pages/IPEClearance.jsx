@@ -180,10 +180,12 @@ function IPEClearance() {
         );
         console.log("Fetched pricing data:", response.data);
         // Find IPE pricing
-        const ipePricing = response.data.find((item) => item.key === "ipe");
+        const ipePricing = response.data.find(
+          (item) => item.serviceKey === "ipe"
+        );
 
         if (ipePricing?.agentPrice) {
-          setAmount(ipePricing?.agentPrice);
+          setAmount(ipePricing.agentPrice);
         }
       } catch (error) {
         console.error("Error fetching IPE price:", error);
