@@ -19,7 +19,7 @@ export const config = {
     airtimeSubscription: "/vtu/airtime",
     subscriptionHistory: "/transactions/history/",
     ipeSubmit: "/verify/submit/ipe",
-    checkStatusipe: "/verify/checkStatus/ipe",
+    checkStatusipe: "/verify/freeStatus/ipe",
     freeStatusipe: "/verify/freeStatus/ipe",
     cacRegistration: "/cac/register",
     bankAgentRegistration: "/bvn/register",
