@@ -361,7 +361,7 @@ export default function VerificationsHistoryTable() {
                     className="w-[100px] px-2 py-2 text-left text-[clamp(0.65rem,1vw,0.75rem)] font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200"
                   />
                   <th className="w-[60px] px-2 py-2 text-left text-[clamp(0.65rem,1vw,0.75rem)] font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
-                    View Slip
+                    Tracking ID
                   </th>
                   <th className="w-[60px] px-2 py-2 text-left text-[clamp(0.65rem,1vw,0.75rem)] font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
                     Details
@@ -383,20 +383,15 @@ export default function VerificationsHistoryTable() {
 
                     <td className="w-[100px] px-2 py-2 whitespace-nowrap">
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        {transaction.data?.transactionStatus || "completed"}
+                        {transaction.data?.data?.raw_data?.transactionStatus ||
+                          "completed"}
                       </span>
                     </td>
-                    <td className="w-[60px] px-2 py-2 whitespace-nowrap">
-                      {transaction.dataFor !== "IPE-Slip" ? (
-                        <button
-                          onClick={() => handleViewSlip(transaction)}
-                          className="text-green-600 hover:text-green-800 transition-colors"
-                        >
-                          <EyeOutlined className="text-lg" />
-                        </button>
-                      ) : (
-                        <span className="text-gray-400">N/A</span>
-                      )}
+                    <td className="w-[100px] px-2 py-2 whitespace-nowrap">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium">
+                        {transaction.data?.data?.raw_data?.newTracking_id ||
+                          "N/A"}
+                      </span>
                     </td>
                     <td className="w-[60px] px-2 py-2 whitespace-nowrap">
                       <button
@@ -581,13 +576,15 @@ export default function VerificationsHistoryTable() {
                 <div>
                   <p className="text-sm font-medium text-gray-500">Status</p>
                   <span className="mt-1 text-sm font-medium capitalize px-2 py-0.5 rounded-full inline-block bg-green-100 text-green-800">
-                    {selectedTransaction.data?.transactionStatus || "N/A"}
+                    {selectedTransaction.data?.data?.raw_data
+                      ?.transactionStatus || "N/A"}
                   </span>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">Name</p>
                   <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.reply?.name || "N/A"}
+                    {selectedTransaction.data?.data?.raw_data.reply?.name ||
+                      "N/A"}
                   </p>
                 </div>
                 <div>
@@ -595,13 +592,14 @@ export default function VerificationsHistoryTable() {
                     Date of Birth
                   </p>
                   <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.reply?.dob || "N/A"}
+                    {selectedTransaction.data?.data?.raw_data.reply?.dob ||
+                      "N/A"}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">New NIN</p>
                   <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.newNIN || "N/A"}
+                    {selectedTransaction.data?.data?.raw_data?.newNIN || "N/A"}
                   </p>
                 </div>
                 <div>
@@ -609,7 +607,8 @@ export default function VerificationsHistoryTable() {
                     New Tracking ID
                   </p>
                   <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.newTracking_id || "N/A"}
+                    {selectedTransaction.data?.data?.raw_data?.newTracking_id ||
+                      "N/A"}
                   </p>
                 </div>
                 <div>
@@ -617,18 +616,11 @@ export default function VerificationsHistoryTable() {
                     Old Tracking ID
                   </p>
                   <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.old_tracking_id || "N/A"}
+                    {selectedTransaction.data?.data?.raw_data
+                      ?.old_tracking_id || "N/A"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Verification Status
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.verificationStatus || "N/A"}
-                  </p>
-                </div>
-                <div className="col-span-2">
                   <p className="text-sm font-medium text-gray-500">Message</p>
                   <p className="mt-1 text-sm text-gray-900">
                     {selectedTransaction.data?.message || "N/A"}

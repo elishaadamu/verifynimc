@@ -121,7 +121,7 @@ function BVNVerify() {
         payload,
         { withCredentials: true }
       );
-
+      console.log("API Response:", response.data);
       // Store the verification data in context
       viewSlip(response.data?.data?.data, selectedSlip);
 
