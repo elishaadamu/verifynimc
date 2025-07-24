@@ -39,14 +39,12 @@ function NIN() {
         );
         console.log("API Prices Response:", response.data);
         // Find NIN pricing
-        const ninPricing = response.data.find(
-          (item) => item.serviceKey === "nin"
-        );
+        const ninPricing = response.data.find((item) => item.key === "nin");
         if (ninPricing) {
           // Update cardSlip with new prices
           const updatedCardSlip = cardSlip.map((slip) => ({
             ...slip,
-            price: ninPricing.agentPrice,
+            price: ninPricing.prices.agent,
           }));
 
           setAgentPrices(updatedCardSlip);
@@ -178,7 +176,7 @@ function NIN() {
           withCredentials: true,
         }
       );
-
+      console.log("Verification response:", response.data);
       setVerificationResult(response.data);
 
       // Show success alert
@@ -198,7 +196,7 @@ function NIN() {
         draggable: true,
       });
 
-      const ninData = response.data?.data?.nin_data;
+      const ninData = response.data?.data?.data?.nin_data;
       if (ninData) {
         navigate("/dashboard/verifications/ninslip", {
           state: { userData: ninData },
