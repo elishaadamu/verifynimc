@@ -203,16 +203,8 @@ export default function VerificationsHistoryTable() {
       navigate("/dashboard/verifications/ninslip", {
         state: { userData: transaction.data?.data?.nin_data },
       });
-    } else if (verificationType === "bvn") {
-      if (slipType === "Basic") {
-        navigate("/dashboard/verifications/basicbvn", {
-          state: { apiData: transaction.data?.data?.data }, // Match the structure from BVNVerify
-        });
-      } else {
-        navigate("/dashboard/verifications/advancedbvn", {
-          state: { apiData: transaction.data?.data?.data?.data }, // Match the structure from BVNVerify
-        });
-      }
+    } else {
+      return navigate("/dashboard/bvnhistory");
     }
   };
 
@@ -263,9 +255,14 @@ export default function VerificationsHistoryTable() {
         />
       </div>
 
-      {loading}
-
-      {!loading && sortedTransactions.length > 0 ? (
+      {loading ? (
+        <div className="flex flex-col items-center justify-center p-16">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mb-4"></div>
+          <p className="text-gray-500 text-lg">
+            Loading transaction history...
+          </p>
+        </div>
+      ) : !loading && sortedTransactions.length > 0 ? (
         <div className="relative overflow-hidden rounded-lg border border-gray-200 shadow">
           <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <table className="w-full table-auto divide-y divide-gray-200 transition-all duration-300 ease-in-out">
@@ -560,28 +557,54 @@ export default function VerificationsHistoryTable() {
                     {selectedTransaction.slipLayout}
                   </p>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    NIN Number
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900 uppercase">
-                    {selectedTransaction?.data?.data?.nin}
-                  </p>
-                </div>
+                {selectedTransaction.verifyWith === "nin" ? (
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      NIN Number
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900 uppercase">
+                      {selectedTransaction?.data?.data?.nin}
+                    </p>
+                  </div>
+                ) : selectedTransaction.verifyWith === "bvn" ? (
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      BVN Number
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900 uppercase">
+                      {selectedTransaction?.data?.data?.bvn}
+                    </p>
+                  </div>
+                ) : null}
                 <div>
                   <p className="text-sm font-medium text-gray-500">Status</p>
                   <span className="mt-1 text-sm font-medium capitalize px-2 py-0.5 rounded-full inline-block bg-blue-100 text-blue-800">
-                    {selectedTransaction.data?.data.verification_details
-                      ?.status || "N/A"}
+                    {selectedTransaction.data?.data.verification_status ||
+                      "N/A"}
                   </span>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Reference</p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {selectedTransaction.data?.data.verification_details
-                      ?.reference || "N/A"}
-                  </p>
-                </div>
+                {selectedTransaction.verifyWith === "nin" ? (
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Reference
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {selectedTransaction.data?.data.verification_details
+                        ?.reference || "N/A"}
+                    </p>
+                  </div>
+                ) : selectedTransaction.verifyWith === "bvn" ? (
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Reference
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {selectedTransaction.data?.data.verification_details
+                        ?.reference || "N/A"}
+                    </p>
+                  </div>
+                ) : null}
+
                 <div>
                   <p className="text-sm font-medium text-gray-500">
                     Verification Type
@@ -590,7 +613,6 @@ export default function VerificationsHistoryTable() {
                     {selectedTransaction.verifyWith}
                   </p>
                 </div>
-
                 <div className="col-span-2">
                   <p className="text-sm font-medium text-gray-500">
                     Response Detail

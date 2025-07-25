@@ -255,9 +255,14 @@ export default function VerificationsHistoryTable() {
         />
       </div>
 
-      {loading}
-
-      {!loading && sortedTransactions.length > 0 ? (
+      {loading ? (
+        <div className="flex flex-col items-center justify-center p-16">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mb-4"></div>
+          <p className="text-gray-500 text-lg">
+            Loading NIN verification history...
+          </p>
+        </div>
+      ) : !loading && sortedTransactions.length > 0 ? (
         <div className="relative overflow-hidden rounded-lg border border-gray-200 shadow">
           <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <table className="w-full table-auto divide-y divide-gray-200 transition-all duration-300 ease-in-out">

@@ -249,9 +249,14 @@ export default function VerificationsHistoryTable() {
         />
       </div>
 
-      {loading}
-
-      {!loading && sortedTransactions.length > 0 ? (
+      {loading ? (
+        <div className="flex flex-col items-center justify-center p-16">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mb-4"></div>
+          <p className="text-gray-500 text-lg">
+            Loading BVN verification history...
+          </p>
+        </div>
+      ) : !loading && sortedTransactions.length > 0 ? (
         <div className="relative overflow-hidden rounded-lg border border-gray-200 shadow">
           <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <table className="w-full table-auto divide-y divide-gray-200 transition-all duration-300 ease-in-out">
@@ -267,6 +272,9 @@ export default function VerificationsHistoryTable() {
                     sortKey="dataFor"
                     className="w-[clamp(120px,20vw,160px)] px-2 py-2 text-left text-[clamp(0.65rem,1vw,0.75rem)] font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200"
                   />
+                  <th className="w-[60px] px-2 py-2 text-left text-[clamp(0.65rem,1vw,0.75rem)] font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    BVN Number
+                  </th>
                   <th className="w-[60px] px-2 py-2 text-left text-[clamp(0.65rem,1vw,0.75rem)] font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
                     View Slip
                   </th>
@@ -290,6 +298,11 @@ export default function VerificationsHistoryTable() {
                     <td className="w-[clamp(120px,20vw,160px)] px-2 py-2 whitespace-nowrap">
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[clamp(0.65rem,1vw,0.75rem)] font-medium capitalize bg-blue-100 text-blue-800">
                         {transaction.dataFor} - {transaction.slipLayout}
+                      </span>
+                    </td>
+                    <td className="w-[clamp(120px,20vw,160px)] px-2 py-2 whitespace-nowrap">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[clamp(0.65rem,1vw,0.75rem)] font-medium capitalize ">
+                        {transaction.data.data.bvn}
                       </span>
                     </td>
                     <td className="w-[60px] px-2 py-2 whitespace-nowrap">
